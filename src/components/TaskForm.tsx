@@ -1,0 +1,68 @@
+import { useState } from 'react'
+import type { Task } from '../types/task'
+
+type Props = {
+  onAdd: (task: Task) => void
+}
+
+export function TaskForm({ onAdd }: Props) {
+  const [title, setTitle] = useState('')
+  const [targetType, setTargetType] = useState<Task['targetType']>('count')
+  const [targetValue, setTargetValue] = useState(1)
+  const [deadline, setDeadline] = useState('')
+
+  function handleAdd() {
+    if (!title.trim()) return
+    onAdd({
+      id: crypto.randomUUID(),
+      title: title.trim(),
+      targetType,
+      targetValue,
+      deadline: deadline || null,
+      createdAt: new Date().toISOString(),
+    })
+    setTitle('')
+    setTargetValue(1)
+    setDeadline('')
+  }
+
+  return (
+    <div className="task-form">
+      <input
+        className="task-form__title"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        onKeyDown={e => e.key === 'Enter' && handleAdd()}
+        placeholder="할 일 이름"
+      />
+      <div className="task-form__row">
+        <span className="task-form__label">목표량</span>
+        <select
+          value={targetType}
+          onChange={e => setTargetType(e.target.value as Task['targetType'])}
+        >
+          <option value="count">횟수</option>
+          <option value="duration">분(min)</option>
+        </select>
+        <input
+          type="number"
+          className="task-form__number"
+          value={targetValue}
+          min={1}
+          onChange={e => setTargetValue(Math.max(1, Number(e.target.value)))}
+        />
+      </div>
+      <div className="task-form__row">
+        <span className="task-form__label">마감</span>
+        <input
+          type="datetime-local"
+          value={deadline}
+          onChange={e => setDeadline(e.target.value)}
+        />
+      </div>
+      <button className="btn-primary" onClick={handleAdd}>
+        + 추가
+      </button>
+    </div>
+  )
+}
