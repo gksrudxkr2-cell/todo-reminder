@@ -4,5 +4,6 @@ export type Task = {
   targetType: 'count' | 'duration'
   targetValue: number
   deadline: string | null
+  done: boolean
   createdAt: string
 }

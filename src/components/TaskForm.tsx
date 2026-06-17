@@ -19,6 +19,7 @@ export function TaskForm({ onAdd }: Props) {
       targetType,
       targetValue,
       deadline: deadline || null,
+      done: false,
       createdAt: new Date().toISOString(),
     })
     setTitle('')

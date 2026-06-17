@@ -11,6 +11,18 @@ export function App() {
     setTasks(prev => [task, ...prev])
   }
 
+  function toggleDone(id: string) {
+    setTasks(prev => prev.map(t => t.id === id ? { ...t, done: !t.done } : t))
+  }
+
+  function deleteTask(id: string) {
+    setTasks(prev => prev.filter(t => t.id !== id))
+  }
+
+  function updateTask(id: string, patch: Partial<Pick<Task, 'title' | 'targetType' | 'targetValue' | 'deadline'>>) {
+    setTasks(prev => prev.map(t => t.id === id ? { ...t, ...patch } : t))
+  }
+
   return (
     <div className="app">
       <header className="app-header">
@@ -23,7 +35,12 @@ export function App() {
         </section>
         <section className="app-section">
           <h2>목록 ({tasks.length})</h2>
-          <TaskList tasks={tasks} />
+          <TaskList
+            tasks={tasks}
+            onToggleDone={toggleDone}
+            onDelete={deleteTask}
+            onUpdate={updateTask}
+          />
         </section>
       </main>
     </div>

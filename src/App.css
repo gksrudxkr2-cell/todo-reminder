@@ -105,18 +105,37 @@ input[type='datetime-local']:focus {
 
 .task-item {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: auto 1fr auto auto auto;
   align-items: center;
   gap: 12px;
   padding: 14px 16px;
   border: 1px solid var(--border);
   border-radius: 10px;
+  cursor: default;
+  user-select: none;
+}
+
+.task-item__checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .task-item__title {
   font-weight: 500;
   color: var(--text-h);
   font-size: 16px;
+}
+
+.task-item--done .task-item__title {
+  text-decoration: line-through;
+  color: var(--text);
+}
+
+.task-item--done {
+  opacity: 0.65;
 }
 
 .task-item__target {
@@ -133,4 +152,77 @@ input[type='datetime-local']:focus {
   font-size: 13px;
   color: var(--text);
   white-space: nowrap;
+}
+
+.task-item__delete {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 7px;
+  border-radius: 6px;
+  line-height: 1;
+  opacity: 0.4;
+  font-family: inherit;
+}
+
+.task-item__delete:hover {
+  opacity: 1;
+  background: rgba(229, 62, 62, 0.1);
+  color: #e53e3e;
+}
+
+/* ── Task Item Edit Mode ── */
+.task-item--editing {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: auto;
+}
+
+.task-item__edit-title {
+  width: 100%;
+  font-size: 16px;
+  padding: 8px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
+  outline: none;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.task-item__edit-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.task-item__edit-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+}
+
+.btn-sm {
+  padding: 6px 16px;
+  font-size: 14px;
 }

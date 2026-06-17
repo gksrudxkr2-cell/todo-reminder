@@ -3,9 +3,12 @@ import { TaskItem } from './TaskItem'
 
 type Props = {
   tasks: Task[]
+  onToggleDone: (id: string) => void
+  onDelete: (id: string) => void
+  onUpdate: (id: string, patch: Partial<Pick<Task, 'title' | 'targetType' | 'targetValue' | 'deadline'>>) => void
 }
 
-export function TaskList({ tasks }: Props) {
+export function TaskList({ tasks, onToggleDone, onDelete, onUpdate }: Props) {
   if (tasks.length === 0) {
     return <p className="task-list__empty">아직 할 일이 없어요. 추가해보세요!</p>
   }
@@ -13,7 +16,13 @@ export function TaskList({ tasks }: Props) {
   return (
     <ul className="task-list">
       {tasks.map(task => (
-        <TaskItem key={task.id} task={task} />
+        <TaskItem
+          key={task.id}
+          task={task}
+          onToggleDone={onToggleDone}
+          onDelete={onDelete}
+          onUpdate={onUpdate}
+        />
       ))}
     </ul>
   )
