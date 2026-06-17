@@ -5,22 +5,26 @@ import type { Task } from './types/task'
 import { getAllTasks, putTask, deleteTaskById } from './lib/db'
 import './App.css'
 
+function sortTasks(tasks: Task[]): Task[] {
+  return [...tasks].sort((a, b) => {
+    if (a.done !== b.done) return a.done ? 1 : -1
+    if (!a.deadline && !b.deadline) return 0
+    if (!a.deadline) return 1
+    if (!b.deadline) return -1
+    return new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+  })
+}
+
 export function App() {
   const [tasks, setTasks] = useState<Task[]>([])
 
   useEffect(() => {
-    getAllTasks().then(loaded => {
-      setTasks(
-        [...loaded].sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
-      )
-    })
+    getAllTasks().then(loaded => setTasks(sortTasks(loaded)))
   }, [])
 
   function addTask(task: Task) {
     putTask(task)
-    setTasks(prev => [task, ...prev])
+    setTasks(prev => sortTasks([task, ...prev]))
   }
 
   function toggleDone(id: string) {
@@ -29,7 +33,7 @@ export function App() {
       if (!target) return prev
       const updated = { ...target, done: !target.done }
       putTask(updated)
-      return prev.map(t => t.id === id ? updated : t)
+      return sortTasks(prev.map(t => t.id === id ? updated : t))
     })
   }
 
@@ -44,7 +48,7 @@ export function App() {
       if (!target) return prev
       const updated = { ...target, ...patch }
       putTask(updated)
-      return prev.map(t => t.id === id ? updated : t)
+      return sortTasks(prev.map(t => t.id === id ? updated : t))
     })
   }
 

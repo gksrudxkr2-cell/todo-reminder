@@ -154,6 +154,16 @@ input[type='datetime-local']:focus {
   white-space: nowrap;
 }
 
+.task-item--overdue {
+  border-color: rgba(229, 62, 62, 0.5);
+  background: rgba(229, 62, 62, 0.04);
+}
+
+.task-item--overdue .task-item__deadline {
+  color: #e53e3e;
+  font-weight: 600;
+}
+
 .task-item__delete {
   background: none;
   border: none;

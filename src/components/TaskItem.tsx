@@ -96,9 +96,11 @@ export function TaskItem({ task, onToggleDone, onDelete, onUpdate }: Props) {
     )
   }
 
+  const isOverdue = !task.done && !!task.deadline && new Date(task.deadline) < new Date()
+
   return (
     <li
-      className={`task-item${task.done ? ' task-item--done' : ''}`}
+      className={`task-item${task.done ? ' task-item--done' : ''}${isOverdue ? ' task-item--overdue' : ''}`}
       onDoubleClick={startEdit}
     >
       <input
