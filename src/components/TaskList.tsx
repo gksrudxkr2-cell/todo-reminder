@@ -1,11 +1,11 @@
-import type { Task } from '../types/task'
+import type { Task, TaskPatch } from '../types/task'
 import { TaskItem } from './TaskItem'
 
 type Props = {
   tasks: Task[]
   onToggleDone: (id: string) => void
   onDelete: (id: string) => void
-  onUpdate: (id: string, patch: Partial<Pick<Task, 'title' | 'targetType' | 'targetValue' | 'deadline'>>) => void
+  onUpdate: (id: string, patch: TaskPatch) => void
 }
 
 export function TaskList({ tasks, onToggleDone, onDelete, onUpdate }: Props) {

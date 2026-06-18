@@ -7,3 +7,5 @@ export type Task = {
   done: boolean
   createdAt: string
 }
+
+export type TaskPatch = Partial<Pick<Task, 'title' | 'targetType' | 'targetValue' | 'deadline'>>

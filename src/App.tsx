@@ -1,19 +1,10 @@
 import { useState, useEffect } from 'react'
 import { TaskForm } from './components/TaskForm'
 import { TaskList } from './components/TaskList'
-import type { Task } from './types/task'
+import type { Task, TaskPatch } from './types/task'
 import { getAllTasks, putTask, deleteTaskById } from './lib/db'
+import { sortTasks } from './lib/taskUtils'
 import './App.css'
-
-function sortTasks(tasks: Task[]): Task[] {
-  return [...tasks].sort((a, b) => {
-    if (a.done !== b.done) return a.done ? 1 : -1
-    if (!a.deadline && !b.deadline) return 0
-    if (!a.deadline) return 1
-    if (!b.deadline) return -1
-    return new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
-  })
-}
 
 export function App() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -42,7 +33,7 @@ export function App() {
     setTasks(prev => prev.filter(t => t.id !== id))
   }
 
-  function updateTask(id: string, patch: Partial<Pick<Task, 'title' | 'targetType' | 'targetValue' | 'deadline'>>) {
+  function updateTask(id: string, patch: TaskPatch) {
     setTasks(prev => {
       const target = prev.find(t => t.id === id)
       if (!target) return prev

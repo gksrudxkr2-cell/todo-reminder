@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import type { Task } from '../types/task'
+import type { Task, TaskPatch } from '../types/task'
+import { isOverdue } from '../lib/taskUtils'
 
 type Props = {
   task: Task
   onToggleDone: (id: string) => void
   onDelete: (id: string) => void
-  onUpdate: (id: string, patch: Partial<Pick<Task, 'title' | 'targetType' | 'targetValue' | 'deadline'>>) => void
+  onUpdate: (id: string, patch: TaskPatch) => void
 }
 
 function formatTarget(task: Task): string {
@@ -96,11 +97,11 @@ export function TaskItem({ task, onToggleDone, onDelete, onUpdate }: Props) {
     )
   }
 
-  const isOverdue = !task.done && !!task.deadline && new Date(task.deadline) < new Date()
+  const overdue = isOverdue(task)
 
   return (
     <li
-      className={`task-item${task.done ? ' task-item--done' : ''}${isOverdue ? ' task-item--overdue' : ''}`}
+      className={`task-item${task.done ? ' task-item--done' : ''}${overdue ? ' task-item--overdue' : ''}`}
       onDoubleClick={startEdit}
     >
       <input
