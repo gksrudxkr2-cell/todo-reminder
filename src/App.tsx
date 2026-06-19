@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { TaskForm } from './components/TaskForm'
 import { TaskList } from './components/TaskList'
+import { NotificationPanel } from './components/NotificationPanel'
 import type { Task, TaskPatch } from './types/task'
 import { getAllTasks, putTask, deleteTaskById } from './lib/db'
 import { sortTasks } from './lib/taskUtils'
@@ -47,6 +48,7 @@ export function App() {
     <div className="app">
       <header className="app-header">
         <h1>할 일 목록</h1>
+        <NotificationPanel />
       </header>
       <main className="app-main">
         <section className="app-section">

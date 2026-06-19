@@ -236,3 +236,23 @@ input[type='datetime-local']:focus {
   padding: 6px 16px;
   font-size: 14px;
 }
+
+/* ── Notification Panel ── */
+.notify-panel {
+  margin-top: 12px;
+}
+
+.notify-panel__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.notify-panel__denied {
+  font-size: 14px;
+  color: #e53e3e;
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(229, 62, 62, 0.3);
+  border-radius: 8px;
+  background: rgba(229, 62, 62, 0.05);
+}
