@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { TaskForm } from './components/TaskForm'
 import { TaskList } from './components/TaskList'
 import { NotificationPanel } from './components/NotificationPanel'
+import { useDeadlineNotifier } from './hooks/useDeadlineNotifier'
 import type { Task, TaskPatch } from './types/task'
 import { getAllTasks, putTask, deleteTaskById } from './lib/db'
 import { sortTasks } from './lib/taskUtils'
@@ -9,6 +10,7 @@ import './App.css'
 
 export function App() {
   const [tasks, setTasks] = useState<Task[]>([])
+  useDeadlineNotifier(tasks)
 
   useEffect(() => {
     getAllTasks().then(loaded => setTasks(sortTasks(loaded)))
