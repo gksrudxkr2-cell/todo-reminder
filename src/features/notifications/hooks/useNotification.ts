@@ -4,7 +4,7 @@ import {
   requestPermission,
   sendTestNotification,
   type NotifyPermission,
-} from '../lib/notify';
+} from '../../../lib/notify';
 
 export function useNotification() {
   const [permission, setPermission] = useState<NotifyPermission>(getPermission);

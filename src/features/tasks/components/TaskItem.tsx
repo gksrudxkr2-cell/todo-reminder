@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import type { Task, TaskPatch } from '../types/task'
-import { isOverdue } from '../lib/taskUtils'
+import type { Task, TaskPatch } from '../../../types/task'
+import { isOverdue } from '../../../lib/taskUtils'
 
 type Props = {
   task: Task

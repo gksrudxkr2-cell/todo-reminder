@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import type { Task } from '../types/task';
-import { getPermission, getTasksToNotify, sendDeadlineNotification } from '../lib/notify';
+import type { Task } from '../../../types/task';
+import { getPermission, getTasksToNotify, sendDeadlineNotification } from '../../../lib/notify';
 
 const INTERVAL_MS = 30_000;
 

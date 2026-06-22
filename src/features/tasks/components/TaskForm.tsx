@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Task } from '../types/task'
+import type { Task } from '../../../types/task'
 
 type Props = {
   onAdd: (task: Task) => void
