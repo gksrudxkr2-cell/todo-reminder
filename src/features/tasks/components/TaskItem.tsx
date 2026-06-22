@@ -7,6 +7,7 @@ type Props = {
   onToggleDone: (id: string) => void
   onDelete: (id: string) => void
   onUpdate: (id: string, patch: TaskPatch) => void
+  onStart: (id: string) => void
 }
 
 function formatTarget(task: Task): string {
@@ -25,7 +26,7 @@ function formatDeadline(deadline: string | null): string {
   })
 }
 
-export function TaskItem({ task, onToggleDone, onDelete, onUpdate }: Props) {
+export function TaskItem({ task, onToggleDone, onDelete, onUpdate, onStart }: Props) {
   const [isEditing, setIsEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(task.title)
   const [editTargetType, setEditTargetType] = useState<Task['targetType']>(task.targetType)
@@ -114,6 +115,15 @@ export function TaskItem({ task, onToggleDone, onDelete, onUpdate }: Props) {
       <span className="task-item__title">{task.title}</span>
       <span className="task-item__target">{formatTarget(task)}</span>
       <span className="task-item__deadline">{formatDeadline(task.deadline)}</span>
+      {!task.done && (
+        <button
+          className="task-item__start"
+          onClick={e => { e.stopPropagation(); onStart(task.id) }}
+          onDoubleClick={e => e.stopPropagation()}
+        >
+          시작하기
+        </button>
+      )}
       <button
         className="task-item__delete"
         onClick={() => onDelete(task.id)}

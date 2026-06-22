@@ -1,0 +1,148 @@
+.checkin-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.checkin-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.checkin-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+
+.checkin-task-title {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+}
+
+.checkin-question {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.emotion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.emotion-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text);
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.emotion-btn__emoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.emotion-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--text-h);
+}
+
+.negotiation-message {
+  text-align: center;
+  font-size: 17px;
+  line-height: 160%;
+  color: var(--text-h);
+  white-space: pre-line;
+  margin: 0;
+}
+
+.negotiation-amount {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.negotiation-amount__label {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.negotiation-amount__input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.negotiation-amount__input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--text-h);
+  outline: none;
+}
+
+.negotiation-amount__input:focus {
+  border-color: var(--accent);
+}
+
+.negotiation-amount__unit {
+  font-size: 15px;
+  color: var(--text);
+  min-width: 20px;
+}
+
+.negotiation-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.negotiation-actions .btn-primary {
+  flex: 1;
+}
+
+.task-item__start {
+  padding: 4px 10px;
+  font-size: 12px;
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.task-item__start:hover {
+  background: var(--accent);
+  color: #fff;
+}

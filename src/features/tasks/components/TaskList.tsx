@@ -6,9 +6,10 @@ type Props = {
   onToggleDone: (id: string) => void
   onDelete: (id: string) => void
   onUpdate: (id: string, patch: TaskPatch) => void
+  onStart: (id: string) => void
 }
 
-export function TaskList({ tasks, onToggleDone, onDelete, onUpdate }: Props) {
+export function TaskList({ tasks, onToggleDone, onDelete, onUpdate, onStart }: Props) {
   if (tasks.length === 0) {
     return <p className="task-list__empty">아직 할 일이 없어요. 추가해보세요!</p>
   }
@@ -22,6 +23,7 @@ export function TaskList({ tasks, onToggleDone, onDelete, onUpdate }: Props) {
           onToggleDone={onToggleDone}
           onDelete={onDelete}
           onUpdate={onUpdate}
+          onStart={onStart}
         />
       ))}
     </ul>

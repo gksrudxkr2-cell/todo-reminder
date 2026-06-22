@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react'
-import type { Task, TaskPatch } from '../../../types/task'
+import type { Task, TaskPatch, Mood, ExecutionStatus } from '../../../types/task'
 import { getAllTasks, putTask, deleteTaskById } from '../../../lib/db'
 import { sortTasks } from '../../../lib/taskUtils'
+
+type ExecutionResult = {
+  mood: Mood
+  actualAmount: number
+  originalTarget: number
+  status: ExecutionStatus
+}
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -40,5 +47,23 @@ export function useTasks() {
     })
   }
 
-  return { tasks, addTask, toggleDone, deleteTask, updateTask }
+  function completeTask(id: string, result: ExecutionResult) {
+    setTasks(prev => {
+      const target = prev.find(t => t.id === id)
+      if (!target) return prev
+      const done = result.status !== 'skipped'
+      const updated: Task = {
+        ...target,
+        done,
+        mood: result.mood,
+        actualAmount: result.actualAmount,
+        originalTarget: result.originalTarget,
+        status: result.status,
+      }
+      putTask(updated)
+      return sortTasks(prev.map(t => t.id === id ? updated : t))
+    })
+  }
+
+  return { tasks, addTask, toggleDone, deleteTask, updateTask, completeTask }
 }
