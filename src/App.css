@@ -183,6 +183,55 @@ input[type='datetime-local']:focus {
   color: #e53e3e;
 }
 
+/* ── Reduced Task ── */
+.task-item--reduced {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.04);
+}
+
+.task-item__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.task-item__title--done {
+  text-decoration: line-through;
+  color: var(--text);
+}
+
+.task-item__reduced-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #d97706;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.task-item__reduced-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 30px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.task-item__reduced-mood {
+  font-size: 12px;
+  background: var(--code-bg);
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
 /* ── Task Item Edit Mode ── */
 .task-item--editing {
   display: flex;

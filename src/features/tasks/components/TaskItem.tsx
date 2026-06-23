@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Task, TaskPatch } from '../../../types/task'
+import type { Mood, Task, TaskPatch } from '../../../types/task'
 import { isOverdue } from '../../../lib/taskUtils'
 
 type Props = {
@@ -10,10 +10,19 @@ type Props = {
   onStart: (id: string) => void
 }
 
+const MOOD_LABEL: Record<Mood, string> = {
+  burdened: '😫 무거움',
+  tired: '😴 피곤함',
+  neutral: '😐 보통',
+  ready: '💪 준비됨',
+}
+
+function unit(task: Task): string {
+  return task.targetType === 'count' ? '회' : '분'
+}
+
 function formatTarget(task: Task): string {
-  return task.targetType === 'count'
-    ? `${task.targetValue}회`
-    : `${task.targetValue}분`
+  return `${task.targetValue}${unit(task)}`
 }
 
 function formatDeadline(deadline: string | null): string {
@@ -99,6 +108,39 @@ export function TaskItem({ task, onToggleDone, onDelete, onUpdate, onStart }: Pr
   }
 
   const overdue = isOverdue(task)
+
+  if (task.status === 'reduced') {
+    const u = unit(task)
+    return (
+      <li className="task-item task-item--reduced" onDoubleClick={startEdit}>
+        <div className="task-item__row">
+          <input
+            type="checkbox"
+            className="task-item__checkbox"
+            checked={task.done}
+            onChange={() => onToggleDone(task.id)}
+            onDoubleClick={e => e.stopPropagation()}
+          />
+          <span className="task-item__title task-item__title--done">{task.title}</span>
+          <span className="task-item__reduced-badge">축소 완료</span>
+          <button
+            className="task-item__delete"
+            onClick={() => onDelete(task.id)}
+            onDoubleClick={e => e.stopPropagation()}
+            title="삭제"
+          >
+            ✕
+          </button>
+        </div>
+        <div className="task-item__reduced-detail">
+          <span>원래 {task.originalTarget}{u} → 완료 {task.actualAmount}{u}</span>
+          {task.mood && (
+            <span className="task-item__reduced-mood">{MOOD_LABEL[task.mood]}</span>
+          )}
+        </div>
+      </li>
+    )
+  }
 
   return (
     <li
