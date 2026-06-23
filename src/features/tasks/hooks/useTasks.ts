@@ -55,6 +55,7 @@ export function useTasks() {
       const updated: Task = {
         ...target,
         done,
+        completedAt: new Date().toISOString(),
         mood: result.mood,
         actualAmount: result.actualAmount,
         originalTarget: result.originalTarget,

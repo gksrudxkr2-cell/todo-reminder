@@ -9,6 +9,7 @@ export type Task = {
   deadline: string | null
   done: boolean
   createdAt: string
+  completedAt?: string
   mood?: Mood
   originalTarget?: number
   actualAmount?: number

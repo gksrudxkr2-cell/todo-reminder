@@ -1,0 +1,250 @@
+/* ── Tabs ── */
+.review-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--code-bg);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.review-tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.review-tab--active {
+  background: var(--bg);
+  color: var(--text-h);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Navigation ── */
+.review-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.review-nav__btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.review-nav__btn:hover {
+  background: var(--code-bg);
+}
+
+.review-nav__label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+/* ── Summary ── */
+.review-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.review-summary__cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.review-summary__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  gap: 4px;
+}
+
+.review-summary__card--done {
+  border-color: rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.review-summary__card--reduced {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.review-summary__card--skipped {
+  border-color: rgba(100, 116, 139, 0.25);
+  background: rgba(100, 116, 139, 0.04);
+}
+
+.review-summary__count {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-h);
+  line-height: 1;
+}
+
+.review-summary__label {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.review-summary__rate-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-summary__rate {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.review-summary__encouragement {
+  font-size: 14px;
+  color: var(--text);
+  font-style: italic;
+}
+
+/* ── Mood Distribution ── */
+.mood-dist {
+  margin-bottom: 24px;
+}
+
+.mood-dist__label {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.mood-dist__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.mood-dist__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 10px 4px;
+  background: var(--code-bg);
+  border-radius: 10px;
+}
+
+.mood-dist__emoji {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.mood-dist__count {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-h);
+  line-height: 1;
+}
+
+.mood-dist__name {
+  font-size: 11px;
+  color: var(--text);
+}
+
+/* ── Review List ── */
+.review-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.review-item {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.review-item--skipped {
+  opacity: 0.7;
+}
+
+.review-item__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-item__icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.review-item__title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-h);
+  flex: 1;
+}
+
+.review-item__detail {
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.review-item__mood {
+  font-size: 12px;
+  color: var(--text);
+  background: var(--code-bg);
+  padding: 2px 8px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+
+/* ── Empty State ── */
+.review-empty {
+  text-align: center;
+  padding: 52px 20px;
+}
+
+.review-empty__main {
+  font-size: 16px;
+  color: var(--text-h);
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+
+.review-empty__sub {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+  line-height: 160%;
+}
