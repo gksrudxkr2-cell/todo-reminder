@@ -109,6 +109,37 @@ export function TaskItem({ task, onToggleDone, onDelete, onUpdate, onStart }: Pr
 
   const overdue = isOverdue(task)
 
+  if (task.status === 'skipped') {
+    return (
+      <li className="task-item task-item--skipped" onDoubleClick={startEdit}>
+        <div className="task-item__row">
+          <input
+            type="checkbox"
+            className="task-item__checkbox"
+            checked={task.done}
+            onChange={() => onToggleDone(task.id)}
+            onDoubleClick={e => e.stopPropagation()}
+          />
+          <span className="task-item__title task-item__title--done">{task.title}</span>
+          <span className="task-item__skipped-badge">건너뜀</span>
+          <button
+            className="task-item__delete"
+            onClick={() => onDelete(task.id)}
+            onDoubleClick={e => e.stopPropagation()}
+            title="삭제"
+          >
+            ✕
+          </button>
+        </div>
+        {task.mood && (
+          <div className="task-item__reduced-detail">
+            <span className="task-item__reduced-mood">{MOOD_LABEL[task.mood]}</span>
+          </div>
+        )}
+      </li>
+    )
+  }
+
   if (task.status === 'reduced') {
     const u = unit(task)
     return (
