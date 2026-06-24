@@ -14,7 +14,7 @@ import './App.css'
 type View = 'tasks' | 'review'
 
 export function App() {
-  const { tasks, addTask, toggleDone, deleteTask, updateTask, completeTask } = useTasks()
+  const { tasks, addTask, toggleDone, deleteTask, updateTask, completeTask, saveError, clearSaveError } = useTasks()
   useDeadlineNotifier(tasks)
 
   const [view, setView] = useState<View>('tasks')
@@ -43,6 +43,12 @@ export function App() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
     <div className="app">
+      {saveError && (
+        <div className="save-error-banner" role="alert">
+          <span>{saveError}</span>
+          <button className="save-error-banner__close" onClick={clearSaveError} aria-label="닫기">✕</button>
+        </div>
+      )}
       <header className="app-header">
         <div className="app-header__top">
           <h1>{view === 'tasks' ? '할 일 목록' : '회고'}</h1>

@@ -425,3 +425,27 @@ input[type='datetime-local']:focus {
 .error-fallback__btn:hover {
   background: #5a67d8;
 }
+
+/* ── Save Error Banner ── */
+.save-error-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #fff5f5;
+  border-bottom: 1px solid rgba(229, 62, 62, 0.3);
+  color: #c53030;
+  font-size: 14px;
+  padding: 10px 16px;
+}
+
+.save-error-banner__close {
+  background: none;
+  border: none;
+  color: #c53030;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
