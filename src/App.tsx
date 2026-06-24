@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { useTasks } from './features/tasks/hooks/useTasks'
 import { useDeadlineNotifier } from './features/notifications/hooks/useDeadlineNotifier'
 import { TaskForm } from './features/tasks/components/TaskForm'
@@ -6,6 +7,7 @@ import { TaskList } from './features/tasks/components/TaskList'
 import { NotificationPanel } from './features/notifications/components/NotificationPanel'
 import { CheckinFlow } from './features/checkin/components/CheckinFlow'
 import { ReviewView } from './features/review/components/ReviewView'
+import { ErrorFallback } from './components/ErrorFallback'
 import type { Mood, ExecutionStatus } from './types/task'
 import './App.css'
 
@@ -39,6 +41,7 @@ export function App() {
   }
 
   return (
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
     <div className="app">
       <header className="app-header">
         <div className="app-header__top">
@@ -91,5 +94,6 @@ export function App() {
         />
       )}
     </div>
+    </ErrorBoundary>
   )
 }

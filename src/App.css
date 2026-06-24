@@ -362,3 +362,66 @@ input[type='datetime-local']:focus {
   border-radius: 8px;
   background: rgba(229, 62, 62, 0.05);
 }
+
+/* ── Error Fallback ── */
+.error-fallback {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f7f8fa;
+}
+
+.error-fallback__card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 32px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.error-fallback__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0 0 12px;
+}
+
+.error-fallback__desc {
+  font-size: 15px;
+  color: #718096;
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+
+.error-fallback__detail {
+  font-size: 12px;
+  color: #e53e3e;
+  background: #fff5f5;
+  border: 1px solid rgba(229, 62, 62, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0 0 24px;
+}
+
+.error-fallback__btn {
+  background: #667eea;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.error-fallback__btn:hover {
+  background: #5a67d8;
+}
