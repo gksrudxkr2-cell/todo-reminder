@@ -28,12 +28,11 @@ export function TaskForm({ onAdd }: Props) {
   }
 
   return (
-    <div className="task-form">
+    <form className="task-form" onSubmit={e => { e.preventDefault(); handleAdd() }}>
       <input
         className="task-form__title"
         value={title}
         onChange={e => setTitle(e.target.value)}
-        onKeyDown={e => e.key === 'Enter' && handleAdd()}
         placeholder="할 일 이름"
       />
       <div className="task-form__row">
@@ -61,9 +60,9 @@ export function TaskForm({ onAdd }: Props) {
           onChange={e => setDeadline(e.target.value)}
         />
       </div>
-      <button className="btn-primary" onClick={handleAdd}>
+      <button type="submit" className="btn-primary">
         + 추가
       </button>
-    </div>
+    </form>
   )
 }
