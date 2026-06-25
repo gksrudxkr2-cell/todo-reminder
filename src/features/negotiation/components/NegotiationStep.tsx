@@ -8,17 +8,22 @@ import {
 
 type Props = {
   task: Task
-  mood: Mood
+  mood: Mood | null
   onComplete: (actualAmount: number) => void
   onSkip: () => void
 }
 
 export function NegotiationStep({ task, mood, onComplete, onSkip }: Props) {
-  const negotiatedTarget = getNegotiatedTarget(task.targetType, task.targetValue, mood)
-  const message = getNegotiationMessage(mood, task.targetType, task.targetValue, negotiatedTarget)
+  const negotiatedTarget = mood != null
+    ? getNegotiatedTarget(task.targetType, task.targetValue, mood)
+    : 0
   const inputConfig = getInputConfig(task.targetType, negotiatedTarget)
 
   const [inputValue, setInputValue] = useState(() => inputConfig.fromStored(negotiatedTarget))
+
+  if (!mood) return null
+
+  const message = getNegotiationMessage(mood, task.targetType, task.targetValue, negotiatedTarget)
 
   function handleComplete() {
     onComplete(inputConfig.toStored(Math.max(0, inputValue)))
