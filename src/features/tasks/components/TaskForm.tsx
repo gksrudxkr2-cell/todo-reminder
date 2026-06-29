@@ -8,7 +8,7 @@ type Props = {
 export function TaskForm({ onAdd }: Props) {
   const [title, setTitle] = useState('')
   const [targetType, setTargetType] = useState<Task['targetType']>('count')
-  const [targetValue, setTargetValue] = useState(1)
+  const [targetValue, setTargetValue] = useState('1')
   const [deadline, setDeadline] = useState('')
 
   function handleAdd() {
@@ -17,13 +17,13 @@ export function TaskForm({ onAdd }: Props) {
       id: crypto.randomUUID(),
       title: title.trim(),
       targetType,
-      targetValue,
+      targetValue: Math.max(1, Number(targetValue) || 1),
       deadline: deadline || null,
       done: false,
       createdAt: new Date().toISOString(),
     })
     setTitle('')
-    setTargetValue(1)
+    setTargetValue('1')
     setDeadline('')
   }
 
@@ -49,7 +49,8 @@ export function TaskForm({ onAdd }: Props) {
           className="task-form__number"
           value={targetValue}
           min={1}
-          onChange={e => setTargetValue(Math.max(1, Number(e.target.value)))}
+          onChange={e => setTargetValue(e.target.value)}
+          onBlur={() => setTargetValue(v => String(Math.max(1, Number(v) || 1)))}
         />
       </div>
       <div className="task-form__row">
