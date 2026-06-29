@@ -29,7 +29,8 @@ export async function sendTestNotification(): Promise<void> {
   if (Notification.permission !== 'granted') return;
   await showNotification('테스트 알림', {
     body: '알림이 정상적으로 작동하고 있어요!',
-    icon: '/favicon.ico',
+    icon: '/icons/pwa-192x192.png',
+    badge: '/icons/pwa-192x192.png',
   });
 }
 
@@ -54,10 +55,11 @@ export function getTasksToNotify(
 export async function sendDeadlineNotification(task: Task): Promise<void> {
   if (Notification.permission !== 'granted') return;
   const isOverdue = new Date(task.deadline!).getTime() <= Date.now();
-  await showNotification(isOverdue ? `❗ ${task.title}` : `⏰ ${task.title}`, {
+  await showNotification(isOverdue ? '❗ 마감 지남' : '⏰ 마감 임박', {
     body: isOverdue
-      ? '마감이 지났어요. 지금 바로 시작해볼까요?'
-      : '마감이 30분 이내예요!',
-    icon: '/favicon.ico',
+      ? `${task.title} · 마감이 지났어요. 지금 바로 시작해볼까요?`
+      : `${task.title} · 마감이 30분 이내예요!`,
+    icon: '/icons/pwa-192x192.png',
+    badge: '/icons/pwa-192x192.png',
   });
 }
