@@ -2,6 +2,15 @@ import type { Task } from '../types/task';
 
 export type NotifyPermission = 'default' | 'granted' | 'denied' | 'unsupported';
 
+async function showNotification(title: string, options: NotificationOptions): Promise<void> {
+  if ('serviceWorker' in navigator) {
+    const registration = await navigator.serviceWorker.ready;
+    await registration.showNotification(title, options);
+    return;
+  }
+  new Notification(title, options);
+}
+
 export const NOTIFY_WINDOW_BEFORE_MS = 30 * 60 * 1000; // 마감 30분 이내
 export const NOTIFY_WINDOW_AFTER_MS  = 60 * 60 * 1000; // 마감 후 1시간 이내
 
@@ -16,9 +25,9 @@ export async function requestPermission(): Promise<NotifyPermission> {
   return result;
 }
 
-export function sendTestNotification(): void {
+export async function sendTestNotification(): Promise<void> {
   if (Notification.permission !== 'granted') return;
-  new Notification('테스트 알림', {
+  await showNotification('테스트 알림', {
     body: '알림이 정상적으로 작동하고 있어요!',
     icon: '/favicon.ico',
   });
@@ -42,10 +51,10 @@ export function getTasksToNotify(
   });
 }
 
-export function sendDeadlineNotification(task: Task): void {
+export async function sendDeadlineNotification(task: Task): Promise<void> {
   if (Notification.permission !== 'granted') return;
   const isOverdue = new Date(task.deadline!).getTime() <= Date.now();
-  new Notification(isOverdue ? `❗ ${task.title}` : `⏰ ${task.title}`, {
+  await showNotification(isOverdue ? `❗ ${task.title}` : `⏰ ${task.title}`, {
     body: isOverdue
       ? '마감이 지났어요. 지금 바로 시작해볼까요?'
       : '마감이 30분 이내예요!',
