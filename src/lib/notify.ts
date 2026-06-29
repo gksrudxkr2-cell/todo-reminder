@@ -2,13 +2,17 @@ import type { Task } from '../types/task';
 
 export type NotifyPermission = 'default' | 'granted' | 'denied' | 'unsupported';
 
+const NOTIFICATION_ICON  = '/icons/notification-icon-192.png';
+const NOTIFICATION_BADGE = '/icons/pwa-192x192.png';
+
 async function showNotification(title: string, options: NotificationOptions): Promise<void> {
+  const opts = { icon: NOTIFICATION_ICON, badge: NOTIFICATION_BADGE, ...options };
   if ('serviceWorker' in navigator) {
     const registration = await navigator.serviceWorker.ready;
-    await registration.showNotification(title, options);
+    await registration.showNotification(title, opts);
     return;
   }
-  new Notification(title, options);
+  new Notification(title, opts);
 }
 
 export const NOTIFY_WINDOW_BEFORE_MS = 30 * 60 * 1000; // 마감 30분 이내
@@ -29,8 +33,6 @@ export async function sendTestNotification(): Promise<void> {
   if (Notification.permission !== 'granted') return;
   await showNotification('테스트 알림', {
     body: '알림이 정상적으로 작동하고 있어요!',
-    icon: '/icons/pwa-192x192.png',
-    badge: '/icons/pwa-192x192.png',
   });
 }
 
@@ -59,7 +61,5 @@ export async function sendDeadlineNotification(task: Task): Promise<void> {
     body: isOverdue
       ? `${task.title} · 마감이 지났어요. 지금 바로 시작해볼까요?`
       : `${task.title} · 마감이 30분 이내예요!`,
-    icon: '/icons/pwa-192x192.png',
-    badge: '/icons/pwa-192x192.png',
   });
 }
