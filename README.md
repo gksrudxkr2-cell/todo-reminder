@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# 할 일 리마인더 (todo-reminder)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 마감일 알림과 **감정 기반 실행 유도**를 결합한 PWA 할 일 앱
+> 단순한 체크리스트가 아니라, 회피 본능을 우회하고 실행을 끌어내는 데 초점을 둔 도구입니다.
 
-Currently, two official plugins are available:
+🔗 **Live:** https://todo-reminder-gold.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ 핵심 기능
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **마감일 알림** — 마감이 임박하거나 지난 할 일에 자동 알림
+- **감정 체크인** — 시작 전 현재 감정(부담 / 지침 / 보통 / 할만함)을 입력
+- **목표 협상** — 부담될 땐 목표를 줄여서라도 시작하게 돕고(문지방 효과), 줄여서 한 것도 떳떳한 기록으로 남김(축소 완료)
+- **회고** — 주간 / 월간으로 완료 · 축소완료 · 건너뜀과 실행 전 감정 분포를 돌아봄
+- **PWA** — 홈 화면 설치, 오프라인 동작, 네이티브 앱 같은 사용 경험
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🧠 설계 철학
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+회피를 만드는 동기 브레이크를 **정서 명명**으로 누그러뜨리고, **진입장벽을 낮춰**(작게 시작) 작은 성취를 쌓아 자기효능감으로 이어지게 하는 것을 목표로 합니다. "줄이기"를 허용하되 흔적이 남게 해, 줄이기가 핑계가 아니라 시작의 발판이 되도록 설계했습니다.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🛠 기술 스택
+
+- **Vite** + **React** + **TypeScript**
+- **IndexedDB** (idb) — 기기 내 영구 저장
+- **vite-plugin-pwa** — Service Worker, Web Manifest
+- **Vitest** — 단위 테스트
+- **Vercel** 배포
+
+---
+
+## 🚀 로컬 실행
+
+```bash
+npm install      # 의존성 설치
+npm run dev      # 개발 서버
+npm run build    # 프로덕션 빌드 (타입 검사 포함)
+npm run preview  # 빌드 결과 미리보기
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🔔 알림 동작 및 제약
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+웹 알림은 플랫폼별로 동작이 다릅니다.
+
+- **Android (Chrome):** 권한 허용 시 정상 동작. 알림 표시는 Service Worker의 `showNotification()`을 사용합니다.
+- **iOS / iPadOS:** **홈 화면에 설치한 PWA 안에서만** 알림이 동작합니다 (iOS 16.4+). 일반 Safari 탭에서는 동작하지 않습니다.
+- **권한 거부 시:** 코드로 재요청이 불가능하며, 사용자가 브라우저 설정에서 직접 권한을 풀어야 합니다.
+
+> **현재 동작:** 앱이 실행 중이거나 백그라운드(탭 유지) 상태일 때 마감 알림이 동작합니다. 앱을 완전히 종료하면 알림이 오지 않을 수 있습니다(웹 푸시 서버 미연동). 완전한 백그라운드 알림은 향후 과제입니다.
+
+---
+
+## 📱 설치 방법 (PWA)
+
+- **Android:** Chrome에서 접속 → 메뉴 → "앱 설치" 또는 "홈 화면에 추가"
+- **iOS:** Safari에서 접속 → 공유 → "홈 화면에 추가"
+
+---
+
+## 🗺 향후 계획
+
+- **반복 기능 + 달력 뷰** — 1회성 / 매일 반복 할 일 구분, 달력으로 날짜를 골라 보는 구조 (할 일 · 회고 공통)
+- **디자인 리프레시** — 디자인 시스템 기반으로 UI 품질 향상
+
+---
+
+## 🙌 만든 사람
+
+rec_han
+
+---
+
+*v1.0.0 — 14일 퀘스트로 완성한 첫 번째 정식 출시 버전*
