@@ -29,13 +29,6 @@ export async function requestPermission(): Promise<NotifyPermission> {
   return result;
 }
 
-export async function sendTestNotification(): Promise<void> {
-  if (Notification.permission !== 'granted') return;
-  await showNotification('테스트 알림', {
-    body: '알림이 정상적으로 작동하고 있어요!',
-  });
-}
-
 export function getTasksToNotify(
   tasks: Task[],
   notifiedIds: ReadonlySet<string>,

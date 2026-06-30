@@ -1,7 +1,7 @@
 import { useNotification } from '../hooks/useNotification';
 
 export function NotificationPanel() {
-  const { permission, enable, test } = useNotification();
+  const { permission, enable } = useNotification();
 
   if (permission === 'unsupported') return null;
 
@@ -25,11 +25,6 @@ export function NotificationPanel() {
         >
           {permission === 'granted' ? '알림 켜짐' : '알림 켜기'}
         </button>
-        {permission === 'granted' && (
-          <button className="btn-secondary btn-sm" onClick={test}>
-            테스트 알림
-          </button>
-        )}
       </div>
     </div>
   );

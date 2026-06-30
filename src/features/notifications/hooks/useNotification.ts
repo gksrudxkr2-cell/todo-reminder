@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   getPermission,
   requestPermission,
-  sendTestNotification,
   type NotifyPermission,
 } from '../../../lib/notify';
 
@@ -14,5 +13,5 @@ export function useNotification() {
     setPermission(result);
   }
 
-  return { permission, enable, test: sendTestNotification };
+  return { permission, enable };
 }
