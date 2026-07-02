@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { useTasks } from './features/tasks/hooks/useTasks'
 import { useDeadlineNotifier } from './features/notifications/hooks/useDeadlineNotifier'
+import { useNotification } from './features/notifications/hooks/useNotification'
 import { TaskForm } from './features/tasks/components/TaskForm'
 import { TaskList } from './features/tasks/components/TaskList'
 import { NotificationPanel } from './features/notifications/components/NotificationPanel'
@@ -15,7 +16,8 @@ type View = 'tasks' | 'review'
 
 export function App() {
   const { tasks, addTask, toggleDone, deleteTask, updateTask, completeTask, saveError, clearSaveError } = useTasks()
-  useDeadlineNotifier(tasks)
+  const notification = useNotification()
+  useDeadlineNotifier(tasks, notification.enabled, notification.settingsLoaded)
 
   const [view, setView] = useState<View>('tasks')
   const [checkinTaskId, setCheckinTaskId] = useState<string | null>(null)
@@ -52,7 +54,7 @@ export function App() {
       <header className="app-header">
         <div className="app-header__top">
           <h1>{view === 'tasks' ? '할 일 목록' : '회고'}</h1>
-          <NotificationPanel />
+          <NotificationPanel {...notification} />
         </div>
         <nav className="app-nav">
           <button

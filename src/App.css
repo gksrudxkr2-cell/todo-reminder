@@ -348,6 +348,13 @@ input[type='datetime-local']:focus {
   margin-top: 12px;
 }
 
+.notify-panel__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .notify-panel__status {
   display: inline-flex;
   align-items: center;
@@ -382,6 +389,57 @@ input[type='datetime-local']:focus {
   padding: 10px 14px;
   border: 1px solid rgba(229, 62, 62, 0.3);
   background: rgba(229, 62, 62, 0.05);
+}
+
+.notify-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.notify-toggle--loading {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.notify-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.notify-toggle__track {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--border);
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.notify-toggle__track::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s;
+}
+
+.notify-toggle input:checked + .notify-toggle__track {
+  background: var(--accent);
+}
+
+.notify-toggle input:checked + .notify-toggle__track::before {
+  transform: translateX(14px);
 }
 
 /* ── Error Fallback ── */

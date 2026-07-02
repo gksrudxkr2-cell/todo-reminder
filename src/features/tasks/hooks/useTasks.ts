@@ -21,12 +21,16 @@ export function useTasks() {
   useEffect(() => {
     getAllTasks()
       .then(loaded => setTasks(sortTasks(loaded)))
-      .catch(err => setLoadError(err instanceof Error ? err : new Error(String(err))))
+      .catch(err => {
+        console.error('[useTasks] 초기 로드 실패', err)
+        setLoadError(err instanceof Error ? err : new Error(String(err)))
+      })
   }, [])
 
   function addTask(task: Task) {
     setTasks(prev => sortTasks([task, ...prev]))
-    putTask(task).catch(() => {
+    putTask(task).catch(err => {
+      console.error('[useTasks] addTask 저장 실패 — state 롤백', { id: task.id }, err)
       setTasks(prev => prev.filter(t => t.id !== task.id))
       setSaveError('할 일을 저장하지 못했습니다. 다시 시도해 주세요.')
     })
